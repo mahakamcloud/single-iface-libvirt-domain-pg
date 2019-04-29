@@ -1,3 +1,9 @@
+resource "null_resource" "dhcp_reservation" {
+  provisioner "local-exec" {
+    command = "python dhcp_reservation.py"
+  }
+}
+
 resource "libvirt_volume" "main" {
   name   = "${var.instance_name}"
   pool   = "${var.pool_name}"
@@ -6,14 +12,14 @@ resource "libvirt_volume" "main" {
 }
 
 resource "libvirt_volume" "secondary" {
-  name   = "${var.instance_name}-secondary"
-  size   = "${var.disk_two_size_gb * 1024 * 1024 * 1024 }"
+  name = "${var.instance_name}-secondary"
+  size = "${var.disk_two_size_gb * 1024 * 1024 * 1024 }"
 }
 
 resource "libvirt_cloudinit_disk" "vm_init" {
-  name  = "${var.instance_name}-init.iso"
+  name = "${var.instance_name}-init.iso"
 
-  user_data = "${var.user_data}"
+  user_data = "${data.template_file.user_data.rendered}"
 }
 
 resource "libvirt_domain" "vm_domain" {
@@ -50,4 +56,6 @@ resource "libvirt_domain" "vm_domain" {
   disk {
     volume_id = "${libvirt_volume.secondary.id}"
   }
+
+  depends_on = ["null_resource.dhcp_reservation"]
 }
