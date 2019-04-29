@@ -48,6 +48,7 @@ variable num_cpu {
 
 variable network_name {
   type        = "string"
+  default     = "default"
   description = "Libvirt network name"
 }
 
