@@ -1,6 +1,6 @@
 resource "null_resource" "dhcp_reservation" {
   provisioner "local-exec" {
-    command     = "python3 dhcp_reservation.py"
+    command     = "python dhcp_reservation.py"
     working_dir = "${path.module}"
   }
 }
