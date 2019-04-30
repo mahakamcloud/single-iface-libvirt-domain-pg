@@ -30,11 +30,6 @@ variable disk_size {
   default     = "4096"
 }
 
-variable password {
-  type        = "string"
-  description = "password to login to VM when running, it's recommended to disable this manually"
-}
-
 variable memory_size {
   type        = "string"
   default     = "2048"
