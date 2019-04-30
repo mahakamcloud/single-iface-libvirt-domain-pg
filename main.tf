@@ -9,16 +9,19 @@ resource "libvirt_volume" "main" {
   pool   = "${var.pool_name}"
   source = "${var.source_path}"
   format = "${var.disk_format}"
+  depends_on = ["null_resource.dhcp_reservation"]
 }
 
 resource "libvirt_volume" "secondary" {
   name = "${var.instance_name}-secondary"
   size = "${var.disk_two_size_gb * 1024 * 1024 * 1024 }"
+  depends_on = ["null_resource.dhcp_reservation"]
 }
 
 resource "libvirt_cloudinit_disk" "vm_init" {
   name      = "${var.instance_name}-init.iso"
   user_data = "${var.user_data}"
+  depends_on = ["null_resource.dhcp_reservation"]
 }
 
 resource "libvirt_domain" "vm_domain" {
