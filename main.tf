@@ -18,8 +18,6 @@ resource "libvirt_volume" "secondary" {
 
 resource "libvirt_cloudinit_disk" "vm_init" {
   name = "${var.instance_name}-init.iso"
-
-  user_data = "${data.template_file.user_data.rendered}"
 }
 
 resource "libvirt_domain" "vm_domain" {
