@@ -63,3 +63,8 @@ variable disk_two_size_gb {
   type        = "string"
   description = "Size of secondary disk"
 }
+
+variable user_data {
+  type        = "string"
+  description = "cloud init user-data"
+}
