@@ -1,7 +1,6 @@
 resource "null_resource" "dhcp_reservation" {
   provisioner "local-exec" {
-    command     = "python dhcp_reservation.py"
-    working_dir = "${path.module}"
+    command = "curl --request PUT --data \"{'hw-address':'${var.mac_address}','hostname':'${var.hostname}'}\" ${var.consul_url}/v1/kv/dhcp4/reservations/${var.hostname}"
   }
 }
 

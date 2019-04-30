@@ -3,9 +3,14 @@ variable libvirt_host {
   description = "IP address of host running libvirt"
 }
 
+variable hostname {
+  type        = "string"
+  description = "VM instance hostname"
+}
+
 variable instance_name {
   type        = "string"
-  description = "name of VM instance"
+  description = "name of VM instance. ideally should be hostname + domain name"
 }
 
 variable pool_name {
@@ -67,4 +72,9 @@ variable disk_two_size_gb {
 variable user_data {
   type        = "string"
   description = "cloud init user-data"
+}
+
+variable consul_url {
+  type        = "string"
+  description = "Consul url, http://<ip_address:port>; should not end with a slash. The DHCP reservation call is made at this URL."
 }
