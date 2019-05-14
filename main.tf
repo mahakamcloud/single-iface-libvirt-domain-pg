@@ -5,7 +5,7 @@ resource "null_resource" "dhcp_reservation" {
 }
 
 resource "libvirt_volume" "main" {
-  name   = "${var.instance_name}"
+  name   = "${var.hostname}"
   pool   = "${var.pool_name}"
   source = "${var.source_path}"
   format = "${var.disk_format}"
@@ -13,19 +13,19 @@ resource "libvirt_volume" "main" {
 }
 
 resource "libvirt_volume" "secondary" {
-  name = "${var.instance_name}-secondary"
+  name = "${var.hostname}-secondary"
   size = "${var.disk_two_size_gb * 1024 * 1024 * 1024 }"
   depends_on = ["null_resource.dhcp_reservation"]
 }
 
 resource "libvirt_cloudinit_disk" "vm_init" {
-  name      = "${var.instance_name}-init.iso"
+  name      = "${var.hostname}-init.iso"
   user_data = "${var.user_data}"
   depends_on = ["null_resource.dhcp_reservation"]
 }
 
 resource "libvirt_domain" "vm_domain" {
-  name      = "${var.instance_name}"
+  name      = "${var.fqdn}"
   memory    = "${var.memory_size}"
   vcpu      = "${var.num_cpu}"
   autostart = "${var.autostart}"
@@ -34,7 +34,7 @@ resource "libvirt_domain" "vm_domain" {
 
   network_interface {
     network_name   = "${var.network_name}"
-    hostname       = "${var.instance_name}"
+    hostname       = "${var.fqdn}"
     mac            = "${var.mac_address}"
     wait_for_lease = false
   }

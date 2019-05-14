@@ -8,9 +8,9 @@ variable hostname {
   description = "VM instance hostname"
 }
 
-variable instance_name {
+variable fqdn {
   type        = "string"
-  description = "name of VM instance. ideally should be hostname + domain name"
+  description = "VM's fqdn"
 }
 
 variable pool_name {
