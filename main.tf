@@ -65,6 +65,10 @@ resource "libvirt_domain" "vm_domain" {
     volume_id = "${libvirt_volume.secondary.id}"
   }
 
+  disk {
+    volume_id = "${libvirt_volume.tertiary.id}"
+  }
+
   provisioner "local-exec" {
     when    = "destroy"
     command = "curl --request DELETE ${var.consul_url}/v1/kv/dhcp4/reservations/${var.hostname}"
