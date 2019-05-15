@@ -14,7 +14,13 @@ resource "libvirt_volume" "main" {
 
 resource "libvirt_volume" "secondary" {
   name       = "${var.hostname}-secondary"
-  size       = "${var.disk_two_size_gb * 1024 * 1024 * 1024 }"
+  size       = "${var.secondary_disk_size_gb * 1024 * 1024 * 1024 }"
+  depends_on = ["null_resource.dhcp_reservation"]
+}
+
+resource "libvirt_volume" "tertiary" {
+  name       = "${var.hostname}-tertiary"
+  size       = "${var.tertiary_disk_size_gb * 1024 * 1024 * 1024 }"
   depends_on = ["null_resource.dhcp_reservation"]
 }
 

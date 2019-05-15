@@ -29,12 +29,6 @@ variable disk_format {
   default = "qcow2"
 }
 
-variable disk_size {
-  description = "The disk size of primary disk in bytes"
-  type        = "string"
-  default     = "4096"
-}
-
 variable memory_size {
   type        = "string"
   default     = "2048"
@@ -63,7 +57,13 @@ variable mac_address {
   description = "mac address of the VM"
 }
 
-variable disk_two_size_gb {
+variable secondary_disk_size_gb {
+  default     = "1"
+  type        = "string"
+  description = "Size of secondary disk"
+}
+
+variable tertiary_disk_size_gb {
   default     = "1"
   type        = "string"
   description = "Size of secondary disk"
